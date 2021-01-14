@@ -1,4 +1,5 @@
-
+# How to run：
+`MOEAD.py`
 
 
 
