@@ -1,0 +1,82 @@
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 32, in <module>
+    import ReadDataSets
+  File "D:\PycharmProjects\software_defect_prediction-master\ReadDataSets.py", line 29, in <module>
+    dataset_name=dataset_name)
+  File "D:\PycharmProjects\software_defect_prediction-master\utilities.py", line 61, in read_dataset
+    return np.array(X), np.array(y), []
+UnboundLocalError: local variable 'X' referenced before assignment
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 37, in <module>
+    sys.stdout = SDPlog.Logger(path + 'a.txt', sys.stdout)
+NameError: name 'SDPlog' is not defined
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 222, in <module>
+    moead.run()
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 123, in run
+    EP_X_ID = self.GA_DE_Utils.envolution(self)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 298, in envolution
+    Y = generate_next(moead, gen, pi, Xi, Xk, Xl)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 223, in generate_next
+    n_p0 = EO(moead, wi, n_p0)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 178, in EO
+    temp_best = replace_char(temp_best, index)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 357, in replace_char
+    if string[index] == '1':
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 222, in <module>
+    moead.run()
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 123, in run
+    EP_X_ID = self.GA_DE_Utils.envolution(self)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 299, in envolution
+    Y = generate_next(moead, gen, pi, Xi, Xk, Xl)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 224, in generate_next
+    n_p0 = EO(moead, wi, n_p0)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 179, in EO
+    temp_best = replace_char(temp_best, index)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 358, in replace_char
+    if string[index] == '1':
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 222, in <module>
+    moead.run()
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 123, in run
+    EP_X_ID = self.GA_DE_Utils.envolution(self)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 300, in envolution
+    Y = generate_next(moead, gen, pi, Xi, Xk, Xl)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 225, in generate_next
+    n_p0 = EO(moead, wi, n_p0)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 180, in EO
+    temp_best = replace_char(temp_best, index)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 359, in replace_char
+    if string[index] == '1':
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 197, in <module>
+    moead.run()
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 123, in run
+    EP_X_ID = self.GA_DE_Utils.envolution(self)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 299, in envolution
+    Y = generate_next(moead, gen, pi, Xi, Xk, Xl)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 209, in generate_next
+    qbxf_p0 = MOEAD_Utils.cpt_tchbycheff(moead, wi, p0)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\MOEAD_Utils.py", line 159, in cpt_tchbycheff
+    fi = Tchebycheff_dist(ri[i], F_X[i], moead.Z[i])
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\MOEAD_Utils.py", line 137, in Tchebycheff_dist
+    return w * abs(f - z)
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 196, in <module>
+    moead.run()
+  File "D:/PycharmProjects/software_defect_prediction-master/MOEAD.py", line 123, in run
+    EP_X_ID = self.GA_DE_Utils.envolution(self)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 300, in envolution
+    Y = generate_next(moead, gen, pi, Xi, Xk, Xl)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\GA_Utils.py", line 210, in generate_next
+    qbxf_p0 = MOEAD_Utils.cpt_tchbycheff(moead, wi, p0)
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\MOEAD_Utils.py", line 159, in cpt_tchbycheff
+    fi = Tchebycheff_dist(ri[i], F_X[i], moead.Z[i])
+  File "D:\PycharmProjects\software_defect_prediction-master\utils\MOEAD_Utils.py", line 137, in Tchebycheff_dist
+    return w * abs(f - z)
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'

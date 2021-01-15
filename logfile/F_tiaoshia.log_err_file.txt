@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/tiaoshitiaoshi.py", line 25, in <module>
+    with open(evaluate_result, 'r') as fs:
+FileNotFoundError: [Errno 2] No such file or directory: 'you file path'
+Traceback (most recent call last):
+  File "D:/PycharmProjects/software_defect_prediction-master/tiaoshi.py", line 9, in <module>
+    sys.stdout = tiaoshitiaoshi.Logger(path + 'a.log', sys.stdout)
+AttributeError: module 'tiaoshitiaoshi' has no attribute 'Logger'
