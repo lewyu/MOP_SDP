@@ -1,0 +1,199 @@
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+import matplotlib.pyplot as plt
+import seaborn as sns
+import re
+import utilities
+
+
+# 数据线处理一下，去重，转float类型，datasetName数据集名称
+def getDataset_HUatu(datasetName):
+    pattern = re.compile(r'\[\s*(\d+)\s*\,\s*(\d+.\d+)\s*\]')
+    content = ""  # 存放文件内容
+    # 文件所在目录
+    path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"
+    # datasetName = 'PC4_RF'  # 数据集名称，对应txt文件名
+    with open(path + datasetName + '.txt', 'r') as f:
+        content = f.read()
+
+    str = pattern.findall(content)
+    temp = np.array(str)
+    temp = np.array(list(set([tuple(t) for t in temp])))  # 去重
+    temp = temp.astype(float)
+
+    # temptemp矩阵只保留最大值
+    temptemp = temp
+    # temptemp = temptemp[:, temptemp[0].argsort()]  # 按第一行排序
+    temptemp = temptemp[temptemp[:, 0].argsort()]  # 按照第1列对行排序
+    print(temptemp)
+    lenSize = len(temptemp[:, 0])  # 边界
+    del_index = []  # 记录要删除的行号
+    ans = []
+    index = 0
+    # jindex = index
+    if lenSize >= 2:
+        # for index in range(lenSize - 1):
+        while index <= (lenSize - 1):  # 下标为0到倒数第二个，为了第二个while循环中jindex+1遍历比较
+            submax = temptemp[index][1]
+            tempindex = index
+            jindex = index
+            while jindex + 1 < lenSize and temptemp[jindex][0] == temptemp[jindex + 1][0]:
+                if submax >= temptemp[jindex + 1][1]:
+                    del_index.append(jindex + 1)
+                else:
+                    submax = temptemp[jindex + 1][1]
+                    tempindex = jindex + 1
+                    del_index.append(jindex)
+                jindex = jindex + 1
+            print(tempindex, "   ", temptemp[tempindex], "    ", submax)
+            ans.append(temptemp[tempindex])
+
+            index = jindex + 1
+
+    print(del_index)
+    ans = np.array(ans)
+    print(ans)
+    # for index in range(len(temptemp[:, 0])):
+    temptemp = ans  # 矩阵最大作坐标集合
+
+    print("temptemp", temptemp)
+    #
+    print("解集矩阵：", temp)
+    # 查看解的个数
+    print(temp.shape)
+    # 第一列,用去重后的
+    number = temptemp[:, 0]
+    print(number)
+    # 第二列
+    auc = temptemp[:, 1]
+    print(auc)
+    # print(pattern.findall(content))
+    print(type(str))
+    # 返回三个矩阵
+    return number, auc, temptemp
+
+
+# 数据线处理一下，找解的集合数组
+def getJieJI_Huatu(datasetName):
+    pattern = re.compile(r':\s*([0-1][0-1][0-1][0-1][0-1][0-1][0-1][0-1][0-1]+)')
+    content = ""  # 存放文件内容
+    # 文件所在目录
+    path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"
+    # datasetName = 'PC4_RF'  # 数据集名称，对应txt文件名
+    with open(path + datasetName + '.txt', 'r') as f:
+        content = f.read()
+
+    str = pattern.findall(content)
+    temp = np.array(str)
+    # temp = temp.astype(float)
+    # temp = np.array(list(set([tuple(t) for t in temp])))  # 去重
+    temp = np.unique(temp)
+    # temp = temp.astype(float)
+
+    length = len(temp[0])  # 数组长度
+    recoder = [0] * length  # 记录数组
+    for item in temp:
+        for i in range(length):
+            if item[i] == '1':
+                recoder[i] = recoder[i] + 1
+            else:
+                continue
+
+    print(recoder)  # 输出记录数组
+
+    # print(temp)
+    # 查看解的个数
+    print(temp.shape)
+    # 第一列
+    # number = temp[:, 0]
+    # print(number)
+    # 第二列
+    # auc = temp[:, 1]
+    # print(auc)
+    # print(pattern.findall(content))
+    # print(type(str))
+    # 返回三个矩阵
+    return temp, recoder
+
+
+# 数据线处理一下，找解的集合交集和合集
+def getJieJI_Jiaoji_Heji_Huatu(datasetName):
+    res, recoder = getJieJI_Huatu(datasetName)
+    print(res)
+
+    recoder = np.array(recoder)
+    recoder = recoder.astype(str)
+
+    res1 = ''.join(recoder)
+    resjiaoji, resheji = res1, res1
+    print("解集为", res1)
+
+    # 交集
+    stringjiaoji = list(resjiaoji)
+    for index in range(len(resjiaoji)):
+        if stringjiaoji[index] == '1':
+            stringjiaoji[index] = '0'
+        elif stringjiaoji[index] == '0':
+            continue
+        else:
+            stringjiaoji[index] = '1'
+
+    resjiaoji = ''.join(stringjiaoji)
+    print("交集为", resjiaoji)
+
+    # 合集
+    stringheji = list(resheji)
+    for index in range(len(resheji)):
+        if stringheji[index] == '0':
+            continue
+        else:
+            stringheji[index] = '1'
+
+    resheji = ''.join(stringheji)
+    print("合集为", resheji)
+
+    return res, res1, resjiaoji, resheji
+
+
+# 从解集中获取频率高的特征
+def getFeatures(datasetName):
+    res, recoder = getJieJI_Huatu(datasetName)
+    path = "D:/PycharmProjects/software_defect_prediction-master/datasets/"
+    df = pd.read_csv(path + "MW1.arff.csv")
+    labels = list(df.columns.values)
+    labels.pop()  # 删除最后一个元素“Defective”
+    print(labels)
+    print("________________________________________")
+    recoder = np.array(recoder).reshape(1, -1)
+    labels = np.array(labels).reshape(1, -1)
+    print(recoder.shape, recoder)
+    print(labels.shape, labels)
+
+    # np.hstack(recoder, labels)
+    data = np.row_stack((recoder, labels))
+    print(data, data.shape)
+    data = data[:, data[0].argsort()[::-1]]  # 按第一行排序，[::-1]表示降序
+    print(data)
+    return data
+    #
+    # results = np.array(r)
+    # print(results)
+
+
+if __name__ == '__main__':
+    # test测试
+    print(getDataset_HUatu("KC3_RF"))
+    # r, r1, r2 = getJieJI_Jiaoji_Heji_Huatu("PC2_Greedy")
+    # print(r, r1, r2)
+    # r1 = "011010000100100000000001001010011100"
+    # r2 = "011010111111110010101001011011011100"
+    #
+    data = getFeatures("MW1_RF")
+    print(data, type(data))
+    for i in range(len(data[1])):
+        print(data[1][i], "\t", data[0][i])
+
+    # print(data[1:])
+    # path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"
+    # np.savetxt(path + 'data.out', data, delimiter=',')  # X is an array
