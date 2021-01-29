@@ -1,6 +1,8 @@
 import sys
 
 
+# 主要用于记录控制台打印输出
+
 class Logger(object):
     def __init__(self, filename="aaa.txt",
                  stream=sys.stdout):
