@@ -79,7 +79,6 @@ def run_method(method, X, y, n_clfs=6, fs_functions=None, score_name="auc"):
         print(max(scores))  # 当做目标2的返回值好了
 
     elif method == "naive":
-        #
         """
         直接用多目标来跑
         """
