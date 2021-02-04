@@ -68,6 +68,7 @@ def getDataset_HUatu(datasetName):
     # 第二列
     auc = temptemp[:, 1]
     print(auc)
+    print("maxAUC:", max(auc))
     # print(pattern.findall(content))
     print(type(str))
     # 返回三个矩阵
@@ -90,7 +91,7 @@ def getJieJI_Huatu(datasetName):
     # temp = np.array(list(set([tuple(t) for t in temp])))  # 去重
     temp = np.unique(temp)
     # temp = temp.astype(float)
-
+    # print(temp)
     length = len(temp[0])  # 数组长度
     recoder = [0] * length  # 记录数组
     for item in temp:
@@ -101,6 +102,13 @@ def getJieJI_Huatu(datasetName):
                 continue
 
     print(recoder)  # 输出记录数组
+    # 1000100000010001000100000000000000000
+    # 0000000000010101000100000000000000000
+    # 0000000100010000001000100000001000100
+    # 11001110010100011111111111010001010100
+    # 00000000000001000000000000010010000110
+    # 00000000000000000100100000000001001000
+    # 01100000000000001001000000000000010010
 
     # print(temp)
     # 查看解的个数
@@ -160,7 +168,7 @@ def getJieJI_Jiaoji_Heji_Huatu(datasetName):
 def getFeatures(datasetName):
     res, recoder = getJieJI_Huatu(datasetName)
     path = "D:/PycharmProjects/software_defect_prediction-master/datasets/"
-    df = pd.read_csv(path + "MW1.arff.csv")
+    df = pd.read_csv(path + "PC5.arff.csv")
     labels = list(df.columns.values)
     labels.pop()  # 删除最后一个元素“Defective”
     print(labels)
@@ -183,17 +191,21 @@ def getFeatures(datasetName):
 
 if __name__ == '__main__':
     # test测试
-    print(getDataset_HUatu("KC3_RF"))
+    print(getDataset_HUatu("MC1_W_SVM"))
     # r, r1, r2 = getJieJI_Jiaoji_Heji_Huatu("PC2_Greedy")
     # print(r, r1, r2)
     # r1 = "011010000100100000000001001010011100"
     # r2 = "011010111111110010101001011011011100"
     #
-    data = getFeatures("MW1_RF")
-    print(data, type(data))
-    for i in range(len(data[1])):
-        print(data[1][i], "\t", data[0][i])
+
+    # data = getFeatures("PC5_Greedy")
+    # print(data, type(data))
+    # for i in range(len(data[1])):
+    #     print(data[1][i], "\t", data[0][i])
 
     # print(data[1:])
     # path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"
     # np.savetxt(path + 'data.out', data, delimiter=',')  # X is an array
+
+    # res, recoder = getJieJI_Huatu("PC5_RF")
+    # print(res,recoder)
