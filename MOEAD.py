@@ -34,7 +34,9 @@ from pybloom_live import ScalableBloomFilter
 
 # 控制台打印输出
 path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"
-sys.stdout = SDPlog.Logger(path + 'camelOSA_EL.txt', sys.stdout)
+# PC2_1_KNN.txt
+sys.stdout = SDPlog.Logger(path + ReadDataSets.dataset_name + "_" + ReadDataSets.subMethod + '.txt',
+                           sys.stdout)  # PC2_1_KNN.txt
 sys.stderr = SDPlog.Logger(path + 'a.log_err_file.txt', sys.stderr)
 
 
@@ -194,3 +196,7 @@ if __name__ == '__main__':
     # np.random.seed(1)
     # moead = MOEAD()
     moead.run()
+
+    # 打印logfile文件名
+    fileName = ReadDataSets.dataset_name + "_" + ReadDataSets.subMethod
+    print(fileName)
