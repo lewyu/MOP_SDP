@@ -1,0 +1,20 @@
+输入：
+初始化理想点Z = (0.1)
+初始化多目标优化问题（MOP）
+种群N，邻居个数T，迭代次数Gen
+输出：Pareto最优解集
+
+W_Vector <-- LOAD_W(N)   //初始化目标空间权重向量
+WT< - cpt_W_Bi_T(N)   //计算每个权重Wi的T个邻居
+Pop = [ ]
+Pop <- Creat_Pop(DataSet)  // 创建种群
+While I < Gen do:
+        Optimal <- Pop_Optimal
+	WT< - cpt_W_Bi_T(Optimal)   //计算每个权重Wi的T个邻居
+	While pi <WT do：  // 找相邻邻域
+		Seed <- generate_next(pi)  // seed是根据演化算子得到的新seed
+		If  cpt_tchbycheff(pi) < cpt_tchbycheff(seed)
+			Pop <-newPareto(seed)  // 加入最优解Pop中
+		End if
+	End while
+End while
