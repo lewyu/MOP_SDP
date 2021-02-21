@@ -1,0 +1,14 @@
+
+D:\PycharmProjects\learn\venv\Scripts\python.exe D:/PycharmProjects/software_defect_prediction-master/MOEAD.py
+
+
+D:\PycharmProjects\learn\venv\Scripts\python.exe D:/PycharmProjects/software_defect_prediction-master/main.py -m forward_selection -d KC3 -fs fisher -s auc
+
+
+D:\PycharmProjects\learn\venv\Scripts\python.exe D:/PycharmProjects/software_defect_prediction-master/testtest.py -fs fisher
+
+
+D:\PycharmProjects\learn\venv\Scripts\python.exe D:/PycharmProjects/software_defect_prediction-master/main.py -m forward_selection -d KC3 -fs fisher -s auc
+
+
+D:\PycharmProjects\learn\venv\Scripts\python.exe D:/PycharmProjects/software_defect_prediction-master/main.py -m naive -d KC3 -fs fisher -s auc
