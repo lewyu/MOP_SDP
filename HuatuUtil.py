@@ -19,8 +19,10 @@ def getDataset_HUatu(datasetName):
 
     str = pattern.findall(content)
     temp = np.array(str)
+    generate_Seed_Num = temp.shape  # 产生候选解个数的数目
     temp = np.array(list(set([tuple(t) for t in temp])))  # 去重
     temp = temp.astype(float)
+
 
     # temptemp矩阵只保留最大值
     temptemp = temp
@@ -55,13 +57,14 @@ def getDataset_HUatu(datasetName):
     ans = np.array(ans)
     print(ans)
     # for index in range(len(temptemp[:, 0])):
-    temptemp = ans  # 矩阵最大作坐标集合
+    temptemp = ans  # 矩阵最大坐标集合
 
     print("temptemp", temptemp)
     #
     print("解集矩阵：", temp)
     # 查看解的个数
-    print(temp.shape)
+    print("产生候选解个数的变化temptemp", generate_Seed_Num, "temp", temptemp.shape)
+    print("数据集", datasetName)
     # 第一列,用去重后的
     number = temptemp[:, 0]
     print(number)
@@ -72,10 +75,10 @@ def getDataset_HUatu(datasetName):
     # print(pattern.findall(content))
     print(type(str))
     # 返回三个矩阵
-    return number, auc, temptemp
+    return number, auc, temptemp  # temptemp
 
 
-# 数据线处理一下，找解的集合数组
+# 数据先处理一下，找解的集合数组
 def getJieJI_Huatu(datasetName):
     pattern = re.compile(r':\s*([0-1][0-1][0-1][0-1][0-1][0-1][0-1][0-1][0-1]+)')
     content = ""  # 存放文件内容
@@ -125,7 +128,7 @@ def getJieJI_Huatu(datasetName):
     return temp, recoder
 
 
-# 数据线处理一下，找解的集合交集和合集
+# 数据先处理一下，找解的集合交集和合集
 def getJieJI_Jiaoji_Heji_Huatu(datasetName):
     res, recoder = getJieJI_Huatu(datasetName)
     print(res)
@@ -168,7 +171,7 @@ def getJieJI_Jiaoji_Heji_Huatu(datasetName):
 def getFeatures(datasetName):
     res, recoder = getJieJI_Huatu(datasetName)
     path = "D:/PycharmProjects/software_defect_prediction-master/datasets/"
-    df = pd.read_csv(path + "PC5.arff.csv")
+    df = pd.read_csv(path + "MC1.arff.csv")
     labels = list(df.columns.values)
     labels.pop()  # 删除最后一个元素“Defective”
     print(labels)
@@ -191,17 +194,17 @@ def getFeatures(datasetName):
 
 if __name__ == '__main__':
     # test测试
-    print(getDataset_HUatu("MC1_W_SVM"))
+    # print(getDataset_HUatu("MC1_W_SVM"))
     # r, r1, r2 = getJieJI_Jiaoji_Heji_Huatu("PC2_Greedy")
     # print(r, r1, r2)
     # r1 = "011010000100100000000001001010011100"
     # r2 = "011010111111110010101001011011011100"
     #
 
-    # data = getFeatures("PC5_Greedy")
-    # print(data, type(data))
-    # for i in range(len(data[1])):
-    #     print(data[1][i], "\t", data[0][i])
+    data = getFeatures("MC1_KNN")
+    print(data, type(data))
+    for i in range(len(data[1])):
+        print(data[1][i], "\t", data[0][i])
 
     # print(data[1:])
     # path = "D:/PycharmProjects/software_defect_prediction-master/logfile/"

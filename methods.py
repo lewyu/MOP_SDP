@@ -82,7 +82,7 @@ def run_method(method, X, y, n_clfs=6, fs_functions=None, score_name="auc"):
         """
         直接用多目标来跑
         """
-        # clfs = [RandomForestClassifier(n_estimators=20)]
+        # clfs = [RandomForestClassifier(n_estimators=20)] #之前的naive
         # clfs = [KNeighborsClassifier()]  #KNN
         clfs = [SVC(class_weight='balanced', probability=True)]  # W_SVM
         n_clfs = len(clfs)
@@ -135,7 +135,10 @@ def ensemble_forward_pass(clfs, X, y, n_clfs=None):
 
             scores += [metrics.roc_auc_score(y_test, y_pred)]
 
-        auc_scores[i] = np.mean(scores)
+        auc_mean = np.mean(scores)
+        if auc_mean < 0.5:  # 小于0.5，可能是反向预测
+            auc_mean = 1 - auc_mean
+        auc_scores[i] = auc_mean  # np.mean(scores)
         print("Score: %.3f, n_clfs: %d" % (auc_scores[i], i + 1))
 
     return auc_scores, np.arange(n_clfs) + 1

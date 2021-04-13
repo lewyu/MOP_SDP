@@ -4,9 +4,9 @@ import argparse
 
 ##### 2. ------- RUN TRANING METHOD
 # method = "forward_selection"
-# method = "ensemble_heter"  # 集成学习
-method = "naive"  # naive方法
-subMethod = "W_SVM"
+method = "ensemble_heter"  # 集成学习
+# method = "naive"  # naive方法
+# subMethod = "W_SVM"
 # method = "ensemble_svm"  # 集成的SVM
 
 # fs_functions = ["pearson"]
@@ -14,7 +14,7 @@ fs_functions = ["greedy"]
 score_name = "auc"
 
 # 集成学习弱分类器个数
-n_clfs = 4
+n_clfs = 3
 # # 弱分类器为 clfs = [SVC(probability=True), MultinomialNB(alpha=0.001),
 #                 BernoulliNB(alpha=0.001), RandomForestClassifier(n_estimators=20),
 #                 GradientBoostingClassifier(n_estimators=300),

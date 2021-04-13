@@ -30,6 +30,7 @@ class Mean_vector:
         return r
 
     def get_mean_vectors(self):
+        # 生成权均匀向量
         H = self.H
         m = self.m
         sequence = []
@@ -64,6 +65,8 @@ class Mean_vector:
         m_v = self.get_mean_vectors()
         self.save_mv_to_file(m_v)
 
-
 # mv = Mean_vector(10, 2, '../vector_csv_file/SDP.csv')
+# mv.generate()
+#
+# mv = Mean_vector(3, 3, '../vector_csv_file/test.csv')   画3X3 空间权重分布图使用
 # mv.generate()
