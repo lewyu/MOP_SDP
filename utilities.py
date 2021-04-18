@@ -42,7 +42,8 @@ class ensemble_clfs:
 
 ##### READING DATASET
 def read_dataset(directory, dataset_name):
-    if dataset_name in ["ant", "antOSA", "antOSA11", "camelOSA", "camel"]:
+    if dataset_name in ["xalan", "xerces", "jedit", "ant", "antOSA", "antOSA11", "camelOSA", "camel", "velocity",
+                        "lucene"]:
         X = pd.read_csv(directory + dataset_name + '.csv')
         y = X['bug']
         del X['bug']
