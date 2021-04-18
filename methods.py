@@ -83,8 +83,8 @@ def run_method(method, X, y, n_clfs=6, fs_functions=None, score_name="auc"):
         直接用多目标来跑
         """
         # clfs = [RandomForestClassifier(n_estimators=20)] #之前的naive
-        # clfs = [KNeighborsClassifier()]  #KNN
-        clfs = [SVC(class_weight='balanced', probability=True)]  # W_SVM
+        clfs = [KNeighborsClassifier()]  #KNN
+        # clfs = [SVC(class_weight='balanced', probability=True)]  # W_SVM
         n_clfs = len(clfs)
         (scores, x_values) = ensemble_forward_pass(clfs, X, y, n_clfs=n_clfs)
         print("best auc is :", max(scores))  # 当做目标2的返回值好了
