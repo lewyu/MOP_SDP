@@ -23,7 +23,6 @@ def getDataset_HUatu(datasetName):
     temp = np.array(list(set([tuple(t) for t in temp])))  # 去重
     temp = temp.astype(float)
 
-
     # temptemp矩阵只保留最大值
     temptemp = temp
     # temptemp = temptemp[:, temptemp[0].argsort()]  # 按第一行排序
@@ -168,10 +167,11 @@ def getJieJI_Jiaoji_Heji_Huatu(datasetName):
 
 
 # 从解集中获取频率高的特征
-def getFeatures(datasetName):
+def getFeatures(datasetName, datasetOriginalName):  # datasetOriginalName为匹配软件度量元名字用的数据集
     res, recoder = getJieJI_Huatu(datasetName)
     path = "D:/PycharmProjects/software_defect_prediction-master/datasets/"
-    df = pd.read_csv(path + "MC1.arff.csv")
+    # df = pd.read_csv(path + "MC1.arff.csv")   # NASA MDP数据集
+    df = pd.read_csv(path + datasetOriginalName + ".csv")  # PROMISE数据集
     labels = list(df.columns.values)
     labels.pop()  # 删除最后一个元素“Defective”
     print(labels)
@@ -186,10 +186,59 @@ def getFeatures(datasetName):
     print(data, data.shape)
     data = data[:, data[0].argsort()[::-1]]  # 按第一行排序，[::-1]表示降序
     print(data)
-    return data
+    return data, recoder, labels
     #
     # results = np.array(r)
     # print(results)
+
+
+# 四种方法合并后排序
+def getAllFeatures(datasetOriginalName):
+    # datasetOriginalName = "ant"
+    methods1 = "KNN"
+    methods2 = "Pearson"
+    methods3 = "Greedy"
+    methods4 = "EL"
+    data1, r1, l1 = getFeatures(datasetOriginalName + "_" + methods1, datasetOriginalName)
+    data2, r2, l2 = getFeatures(datasetOriginalName + "_" + methods2, datasetOriginalName)
+    # data3,r3,l3 = getFeatures(datasetOriginalName + "_" + methods3, datasetOriginalName)
+    data4, r4, l4 = getFeatures(datasetOriginalName + "_" + methods4, datasetOriginalName)
+    #
+    print("+++++++++四个方法的统计结果累加+++++++++++++++")
+    data = data1  # 初始化
+    data = np.append(data, data2, axis=1)
+    # data = np.append(data, data3, axis=1)
+    data = np.append(data, data4, axis=1)
+    #
+    print(r2, type(r2), "++++++")
+    recoder = r1
+    recoder = np.append(recoder, r2, axis=0)
+    # recoder = np.append(recoder,r3,axis=0)
+    recoder = np.append(recoder, r4, axis=0)
+    print(recoder, type(recoder))
+    print(recoder.sum(axis=0))
+    recoder = recoder.sum(axis=0)
+    data = np.row_stack((recoder, l1))
+
+    # data = pd.DataFrame(data)
+    a = data[0].astype(np.int)
+    print(a.dtype)
+    print(data, data.shape)
+    # data = data[:, data[0].argsort()[::-1]]  # 按第一行排序，[::-1]表示降序
+    data = data[:, a.argsort()[::-1]]  # 按第一行排序，[::-1]表示降序
+    print(data)
+    # print("+++++++++四个方法的统计结果累加+++++++++++++++")
+    # allData = data1  # 初始化
+    # # print(np.concatenate((data, data2), axis=0))
+    # allData = np.append(allData, data2, axis=1)
+    # # allData = np.append(allData, data3, axis=1)
+    # allData = np.append(allData, data4, axis=1)
+    # print(allData)
+
+
+    return data
+
+
 
 
 if __name__ == '__main__':
@@ -199,10 +248,10 @@ if __name__ == '__main__':
     # print(r, r1, r2)
     # r1 = "011010000100100000000001001010011100"
     # r2 = "011010111111110010101001011011011100"
-    #
+    # 一、获取软件度量元
 
-    data = getFeatures("MC1_KNN")
-    print(data, type(data))
+    data = getAllFeatures("ant")
+    print(data, type(data), data.shape, type(data[1][1]), type(data[0][1]))
     for i in range(len(data[1])):
         print(data[1][i], "\t", data[0][i])
 
